@@ -21,29 +21,31 @@ const MainHeader = () => {
 };
 
 const Header = styled.header`
-  background-color: #fff;
-  padding: 1rem 2rem;
+  background-color: #ffffff;
   position: sticky;
   width: 100vw;
   height: 10vh;
+  min-height: 8rem;
+  padding: 0 5rem 0 5rem;
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 3fr;
 
   .logo {
     img {
-      width: 120px;
+      width: 7rem;
     }
   }
 
   nav {
-    width: 50%;
+    display: flex;
+    align-items: center;
+    width: 100rem;
     
     ul {
-      display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-row-gap: 2rem;
+      display: flex;
+      justify-content: space-evenly;
+      
     
 
       li {

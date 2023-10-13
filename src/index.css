@@ -1,4 +1,6 @@
 /* Reset CSS */
+/* CSS HEX */
+
 * {
   margin: 0;
   padding: 0;
@@ -7,10 +9,13 @@
 }
 
 :root {
+  --charcoal: #264653ff;
+  --persian-green: #2a9d8fff;
+  --saffron: #e9c46aff;
+  --sandy-brown: #f4a261ff;
+  --burnt-sienna: #e76f51ff;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;}
 
 html {
@@ -21,6 +26,7 @@ body {
   font-size: 1.6rem;
   font-family: Arial, sans-serif;
   line-height: 1.5;
+  color: rgb(255, 255, 255);
 }
 
 h1, h2, h3, h4, h5, h6 {

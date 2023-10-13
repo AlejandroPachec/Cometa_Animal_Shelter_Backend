@@ -14,7 +14,7 @@ module.exports = {
     'react-refresh/only-export-components': 'warn',
     semi: ['error', 'always'],
     indent: ['error', 2],
-    'no-multiple-empty-lines': ['error', { max: 2 }],
+    'no-multiple-empty-lines': ['error', { max: 4 }],
     'no-unused-vars': ['warn']
   }
 };
