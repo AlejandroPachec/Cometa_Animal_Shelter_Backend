@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS cometa;
 
 USE cometa;
 
-DROP TABLE IF EXISTS testimonies, animal_photos, animals, team;
+DROP TABLE IF EXISTS testimonies, pet_photos, pets, team;
 
 CREATE TABLE IF NOT EXISTS team (
     team_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS team (
     password VARCHAR(100)
     );
 
-CREATE TABLE IF NOT EXISTS animals (
-    animal_id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS pets (
+    pet_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     species ENUM('Gato', 'Perro') NOT NULL,
     sex ENUM('Macho', 'Hembra', 'Desconocido'),
@@ -26,12 +26,12 @@ CREATE TABLE IF NOT EXISTS animals (
     adoption_date DATE
 );
 
-CREATE TABLE IF NOT EXISTS animal_photos (
+CREATE TABLE IF NOT EXISTS pet_photos (
     photo_id INT AUTO_INCREMENT PRIMARY KEY,
-    animal_id INT,
+    pet_id INT,
     photo VARCHAR(60) NOT NULL,
     description TEXT,
-    FOREIGN KEY (animal_id) REFERENCES animals(animal_id)
+    FOREIGN KEY (pet_id) REFERENCES pets(pet_id)
         ON DELETE CASCADE
 );
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS testimonies (
         adopter_last_name VARCHAR(50),
 		created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 		modified_at DATETIME NULL,
-		animal_id INT NOT NULL,
-		FOREIGN KEY (animal_id) REFERENCES animals(animal_id)
+		pet_id INT NOT NULL,
+		FOREIGN KEY (pet_id) REFERENCES pets(pet_id)
         ON DELETE CASCADE
 );

@@ -11,7 +11,7 @@ async function backUpDB () {
         ('Nuria', 'Perales', 'nuria_perales@example.com');
     `);
 
-        await pool.query(`INSERT INTO animals (name, species, sex, weight, estimated_birthdate, breed, status, description, date_added, adoption_date) VALUES
+        await pool.query(`INSERT INTO pets (name, species, sex, weight, estimated_birthdate, breed, status, description, date_added, adoption_date) VALUES
         ('Fluffy', 'Gato', 'Hembra', 4.5, '2021-02-15', 'Tabby', 'En proceso de adopción', 'A cute and playful tabby cat.', '2023-01-15', '2023-01-21'),
         ('Buddy', 'Perro', 'Macho', 25.5, '2020-05-10', 'Golden Retriever', 'En proceso de adopción', 'A friendly golden retriever.', '2023-02-10', '2023-01-21'),
         ('Luna', 'Gato', 'Hembra', 3.2, '2022-07-10', 'Siamese', 'En proceso de adopción', 'Una gata siamesa cariñosa y juguetona.', '2023-03-05', '2023-03-15'),
@@ -20,13 +20,13 @@ async function backUpDB () {
     ('Bella', 'Perro', 'Hembra', 12.1, '2020-08-15', 'Dachshund', 'En proceso de adopción', 'Una dachshund encantadora y leal.', '2023-04-05', '2023-04-15');
     `);
 
-        await pool.query(`INSERT INTO animal_photos (animal_id, photo, description) VALUES
+        await pool.query(`INSERT INTO pet_photos (pet_id, photo, description) VALUES
         (1, 'fluffy1.jpg', 'Fluffy playing with a toy'),
         (1, 'fluffy2.jpg', 'Fluffy sleeping peacefully'),
         (2, 'buddy1.jpg', 'Buddy fetching a ball');
     `);
 
-        await pool.query(`INSERT INTO testimonies (title, text, testimony_photo, adopter_first_name, adopter_last_name, animal_id)
+        await pool.query(`INSERT INTO testimonies (title, text, testimony_photo, adopter_first_name, adopter_last_name, pet_id)
         VALUES
             ('Una Experiencia de Amor', 'Adoptamos a nuestro amigo peludo de este refugio, y ha sido un viaje increíble. Nuestra nueva mascota ha traído tanta alegría a nuestras vidas.', 'testimonio1.jpg', 'Juan', 'Pérez', 1),
             ('Amor Incondicional', 'No puedo expresar cuánto adoramos a nuestra mascota adoptada. Es el compañero más cariñoso y leal que uno podría desear.', 'testimonio2.jpg', 'María', 'González', 2),

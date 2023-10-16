@@ -86,17 +86,17 @@
       </tr>
       <tr>
         <td align="center">POST</td>
-        <td>animals/addAnimal</td>
+        <td>pets/addpet</td>
         <td>Añadir un nuevo perro o gato que llegue a la protectora</td>
       </tr>
       <tr>
         <td align="center">GET</td>
-        <td>animals?name=&species=&weight=&status=&gender=&age=</td>
+        <td>pets?name=&species=&weight=&status=&gender=&age=</td>
         <td>Obtener todos los animales. Se pueden filtrar por nombre, especie (perro o gato), peso, estado de la adopción, género y edad</td>
       </tr>
       <tr>
         <td align="center">GET</td>
-        <td>animal/:idAnimal</td>
+        <td>Pet/:idAnimal</td>
         <td>Obtener un animal en concreto</td>
       </tr>
     </tbody>
