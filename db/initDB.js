@@ -13,10 +13,12 @@ async function createDB () {
 
         await pool.query(`CREATE TABLE IF NOT EXISTS team (
 					team_id INT AUTO_INCREMENT PRIMARY KEY,
-					first_name VARCHAR(100) NOT NULL,
-					last_name VARCHAR(100) NOT NULL,
-					email VARCHAR(100) NOT NULL UNIQUE,
-					password VARCHAR(100)
+    			first_name VARCHAR(100) NOT NULL,
+    			last_name VARCHAR(100) NOT NULL,
+    			email VARCHAR(100) NOT NULL UNIQUE,
+    			registration_code VARCHAR(36),
+    			active BOOLEAN DEFAULT 0,
+    			password VARCHAR(100)
 					);`);
 
         await pool.query(`CREATE TABLE IF NOT EXISTS pets (

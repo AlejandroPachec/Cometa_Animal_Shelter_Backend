@@ -12,14 +12,14 @@ const SECRET = process.env.SECRET;
 const UPLOADS_DIR = process.env.UPLOADS_DIR;
 
 module.exports = {
-    PORT,
-    MYSQL_USER,
-    MYSQL_HOST,
-    MYSQL_PASSWORD,
-    MYSQL_DB_NAME,
-    SMTP_USER,
-    SMTP_PASSWORD,
-    SECRET,
-    UPLOADS_DIR,
-    MYSQL_PORT
+  PORT,
+  MYSQL_USER,
+  MYSQL_HOST,
+  MYSQL_PASSWORD,
+  MYSQL_DB_NAME,
+  SMTP_USER,
+  SMTP_PASSWORD,
+  SECRET,
+  UPLOADS_DIR,
+  MYSQL_PORT
 };

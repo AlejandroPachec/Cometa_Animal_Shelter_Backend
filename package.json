@@ -7,7 +7,7 @@
     "dev": "nodemon ./server.js",
     "db": "node ./db/initDB.js",
     "start": "node ./server.js", 
-    "backup": "node ./db/backupDB.js"
+    "backup": "node ./db/dummyDataDB.js"
   },
   "author": "",
   "license": "ISC",
