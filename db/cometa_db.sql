@@ -10,8 +10,9 @@ CREATE TABLE IF NOT EXISTS team (
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     registration_code VARCHAR(36),
-    active BOOLEAN DEFAULT 0,
-    password VARCHAR(100)
+    active TINYINT UNSIGNED NOT NULL DEFAULT 0,
+    password VARCHAR(100),
+    created_at DATETIME NOT NULL DEFAULT NOW()
     );
 
 CREATE TABLE IF NOT EXISTS pets (
@@ -25,7 +26,8 @@ CREATE TABLE IF NOT EXISTS pets (
     status ENUM('Buscando', 'En proceso de adopción', 'Adoptado') DEFAULT 'Buscando',
     description TEXT,
     date_added DATE, 
-    adoption_date DATE
+    adoption_date DATE,
+    created_at DATETIME NOT NULL DEFAULT NOW(),
 );
 
 CREATE TABLE IF NOT EXISTS pet_photos (

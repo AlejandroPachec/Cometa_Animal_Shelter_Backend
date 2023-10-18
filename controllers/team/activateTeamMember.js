@@ -1,6 +1,3 @@
-//! FALLANDO
-
-
 const Joi = require('joi');
 const generateError = require('../../helpers/generateError');
 const getPool = require('../../db/connectDB');
@@ -22,13 +19,13 @@ async function activateTeamMember (req, res, next) {
     const [[idUser]] = await pool.query('SELECT team_id FROM team WHERE registration_code = ?', [registrationCode]);
 
     if (!idUser) {
-      return next(generateError('El usuario que intenta activar no existe', 404));
+      return next(generateError('El miembro del equipo que intenta activar no existe', 404));
     }
 
     await pool.query(`
         UPDATE team 
         SET registration_code = null,
-        active = true,
+        active = true
         WHERE registration_code = ?`
     , [registrationCode]);
 

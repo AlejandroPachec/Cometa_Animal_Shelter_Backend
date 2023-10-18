@@ -26,11 +26,6 @@ async function createUser (req, res, next) {
     const registrationCode = crypto.randomUUID();
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await pool.query(
-      `INSERT INTO team(first_name, last_name, email, password, registration_code) 
-             VALUES (?, ?, ?, ?, ?)`,
-      [firstName, lastName, email, hashedPassword, registrationCode]
-    );
 
     const subject = '[Cometa] Completa tu registro';
 
@@ -38,6 +33,11 @@ async function createUser (req, res, next) {
 
     await emailVerification(email, subject, html);
 
+    await pool.query(
+      `INSERT INTO team(first_name, last_name, email, password, registration_code) 
+             VALUES (?, ?, ?, ?, ?)`,
+      [firstName, lastName, email, hashedPassword, registrationCode]
+    );
     const [insertedId] = await pool.query('SELECT LAST_INSERT_ID() as id');
 
     res.status(200).send({
