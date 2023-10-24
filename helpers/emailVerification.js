@@ -1,5 +1,3 @@
-//! FALLANDO
-
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 const generateError = require('../helpers/generateError');

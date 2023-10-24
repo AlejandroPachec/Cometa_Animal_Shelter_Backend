@@ -1,17 +1,16 @@
 const express = require('express');
 const teamRouter = express.Router();
-// const authUser = require('../middlewares/authUser');
-
 const createTeamMember = require('../controllers/team/createTeamMember');
 const activateTeamMember = require('../controllers/team/activateTeamMember');
-// const loginUser = require('../controllers/team/loginTeamMember');
+const loginTeamMember = require('../controllers/team/loginTeamMember');
 const getTeamMember = require('../controllers/team/getTeamMember');
-// const editUser = require('../controllers/team/editTeamMember');
+const authTeamMember = require('../middlewares/authTeamMember');
 
-teamRouter.post('/create', createTeamMember);
+
+teamRouter.post('/create', authTeamMember, createTeamMember);
 teamRouter.get('/activate/:registrationCode', activateTeamMember);
-// userRouter.post('/login', loginUser);
-teamRouter.get('/profile/:teamId', getTeamMember);
-// userRouter.put('/edit', authUser, editUser);
+teamRouter.post('/login', loginTeamMember);
+teamRouter.get('/profile/:teamId', authTeamMember, getTeamMember);
+
 
 module.exports = teamRouter;

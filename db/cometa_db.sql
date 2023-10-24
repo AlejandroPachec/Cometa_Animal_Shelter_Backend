@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS team (
 CREATE TABLE IF NOT EXISTS pets (
     pet_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
-    species ENUM('Gato', 'Perro') NOT NULL,
+    species ENUM('Gato', 'Perro', 'Otros') NOT NULL,
     sex ENUM('Macho', 'Hembra', 'Desconocido'),
     weight DECIMAL(5, 2), 
     estimated_birthdate DATE,
