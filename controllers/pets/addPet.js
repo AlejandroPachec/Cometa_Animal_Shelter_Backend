@@ -1,4 +1,3 @@
-const crypto = require('crypto');
 const getPool = require('../../db/connectDB');
 const addPetSchema = require('../../schema/addPetSchema');
 const generateError = require('../../helpers/generateError');
@@ -47,7 +46,7 @@ async function addPet (req, res, next) {
     if (petDescription.length > 0) {
       return next(generateError('Ya existe una mascota con esa descripción', 400));
     }
-
+    console.log(dateAdded);
     await pool.query(
       'INSERT INTO pets(name, species, sex, weight, estimated_birthdate, breed, status, description, date_added, adoption_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [name, species, sex, weight, estimatedBirthdate, breed, status, description, dateAdded, adoptionDate]
@@ -58,8 +57,8 @@ async function addPet (req, res, next) {
       for (const photo of photos) {
         const photoName = await savePhoto(photo, 500);
         await pool.query(
-          'INSERT INTO pet_photos (name, pet_id) VALUES (?, ?)',
-          [photoName, insertedId]
+          'INSERT INTO pet_photos (pet_id, photo) VALUES (?, ?)',
+          [insertedId[0].id, photoName]
         );
 
         insertedPhotos.push(photoName);
@@ -67,15 +66,15 @@ async function addPet (req, res, next) {
     } else {
       const photoName = await savePhoto(photos, 500);
       await pool.query(
-        'INSERT INTO product_photo (id, name, product_id) VALUES (?, ?, ?)',
-        [photoName, insertedId]
+        'INSERT INTO pet_photos (pet_id, photo) VALUES (?, ?)',
+        [insertedId[0].id, photoName]
       );
       insertedPhotos.push(photoName);
     }
-
+//! CORREGIR FECHAS Y COMPROBAR CON VARIAS FOTOS
     res.status(200).send({
       status: 'Ok',
-      message: 'Producto creado correctamente',
+      message: 'Mascota agregada correctamente',
       data: {
         pet_id: insertedId[0].id,
         name,
