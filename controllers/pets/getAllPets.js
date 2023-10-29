@@ -1,95 +1,102 @@
 const getPool = require('../../db/connectDB');
+//! COMPROBAR FILTROS. SIN FILTROS FUNCIONA
+async function getAllPets (req, res, next) {
+  try {
+    const pool = await getPool();
 
-async function getAllProducts (req, res, next) {
-    try {
-        const pool = await getPool();
+    const conditions = [];
+    const weightRange = [];
 
-        const conditions = [];
-        const priceRange = [];
+    const speciesFilter = req.query?.species;
+    const ageFilter = req.query?.age;
+    const nameFilter = req.query?.name;
+    const weightFilter = req.query?.weight;
 
-        const categoryFilter = req.query?.category;
-        const cityFilter = req.query?.city;
-        const nameFilter = req.query?.name;
-        const priceFilter = req.query?.price;
-
-        let query = `
+    let query = `
         SELECT
-            p.id AS product_id,
-            p.name AS product_name,
-            p.description AS product_description,
-            p.price AS product_price,
-            p.category AS product_category,
-            p.state AS product_state,
-            p.created_at AS product_time,
-            p.user_id AS seller_id,
-            p.availability AS availability,
-            u.first_name AS seller_first_name,
-            u.last_name AS seller_last_name,
-            u.city AS seller_city,
-            r.title AS review_title,
-            r.text AS review_text,
-            AVG(r.stars) AS average_review_stars,
-            GROUP_CONCAT(ph.name) AS product_photos 
+            p.pet_id,
+            p.name,
+            p.species,
+            p.sex,
+            p.weight,
+            p.estimated_birthdate,
+            p.breed,
+            p.status,
+            p.description,
+            p.date_added,
+            p.adoption_date,
+            p.created_at,
+            GROUP_CONCAT(pp.photo) AS pet_photos 
         FROM
-            products AS p
-        JOIN
-            users AS u ON p.user_id = u.id
+            pets AS p
         LEFT JOIN
-            reviews AS r ON p.id = r.product_id
-        LEFT JOIN
-            product_photo AS ph ON p.id = ph.product_id`;
+            pet_photos AS pp ON p.pet_id = pp.pet_id`;
 
-        if (categoryFilter) {
-            conditions.push('p.category = ?');
-        }
-
-        if (cityFilter) {
-            conditions.push('u.city = ?');
-        }
-
-        if (nameFilter) {
-            conditions.push('p.name LIKE ?');
-        }
-
-        if (priceFilter) {
-            const [minPrice, maxPrice] = priceFilter.split('-');
-            conditions.push(`p.price BETWEEN ${minPrice} AND ${maxPrice}`);
-            priceRange.push(minPrice);
-            priceRange.push(maxPrice);
-        }
-
-        if (conditions.length > 0) {
-            query += ' WHERE ' + conditions.join(' AND ');
-        }
-
-        query += `
-        GROUP BY
-            p.id, p.name, p.description, p.category, p.user_id, u.first_name, u.last_name, u.city, r.title, r.text`;
-
-        const nameFilterValue = nameFilter ? `%${nameFilter}%` : null;
-        const params = [categoryFilter, cityFilter, nameFilterValue, priceRange].filter(value => value !== undefined);
-
-        const [products] = await pool.query(query, params);
-
-
-        const productsWithImages = products.map((product) => {
-            const productPhotos = product.product_photos ? product.product_photos.split(',') : [];
-            const productImageUrls = productPhotos.map((photoName) => `${photoName.trim()}`);
-
-            return {
-                ...product,
-                product_photos: productImageUrls
-            };
-        });
-
-        res.status(200).send({
-            status: 'Ok',
-            message: 'Productos disponibles',
-            data: productsWithImages
-        });
-    } catch (error) {
-        next(error);
+    if (speciesFilter) {
+      conditions.push('p.species = ?');
     }
+
+    if (ageFilter) {
+      const [minAge, maxAge] = weightFilter.split('-');
+      conditions.push(`p.weight BETWEEN ${minAge} AND ${maxAge}`);
+      weightRange.push(minAge);
+      weightRange.push(maxAge);
+    }
+
+    if (nameFilter) {
+      conditions.push('p.name LIKE ?');
+    }
+
+    if (weightFilter) {
+      const [minWeight, maxWeight] = weightFilter.split('-');
+      conditions.push(`p.weight BETWEEN ${minWeight} AND ${maxWeight}`);
+      weightRange.push(minWeight);
+      weightRange.push(maxWeight);
+    }
+
+    if (conditions.length > 0) {
+      query += ' WHERE ' + conditions.join(' AND ');
+    }
+
+    query += `
+        GROUP BY
+        p.pet_id,
+        p.name,
+        p.species,
+        p.sex,
+        p.weight,
+        p.estimated_birthdate,
+        p.breed,
+        p.status,
+        p.description,
+        p.date_added,
+        p.adoption_date,
+        p.created_at`;
+
+    const nameFilterValue = nameFilter ? `%${nameFilter}%` : null;
+    const params = [speciesFilter, ageFilter, nameFilterValue, weightRange].filter(value => value !== undefined);
+
+    const [pets] = await pool.query(query, params);
+
+
+    const petsWithImages = pets.map((pet) => {
+      const petPhotos = pet.pet_photos ? pet.pet_photos.split(',') : [];
+      const petImageUrls = petPhotos.map((photoName) => `${photoName.trim()}`);
+
+      return {
+        ...pet,
+        pet_photos: petImageUrls
+      };
+    });
+
+    res.status(200).send({
+      status: 'Ok',
+      message: 'Mascotas disponibles',
+      data: petsWithImages
+    });
+  } catch (error) {
+    next(error);
+  }
 }
 
-module.exports = getAllProducts;
+module.exports = getAllPets;
