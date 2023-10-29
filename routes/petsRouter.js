@@ -1,6 +1,6 @@
 const express = require('express');
 // const getAllProducts = require('../controllers/products/getAllProducts');
-const addPet = require('../controllers/products/addPet');
+const addPet = require('../controllers/pets/addPet');
 // const getProduct = require('../controllers/products/getProduct');
 const authTeamMember = require('../middlewares/authTeamMember');
 

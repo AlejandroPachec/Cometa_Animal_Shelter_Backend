@@ -21,7 +21,7 @@ const addPetSchema = Joi.object({
     'number.positive': 'El peso de la mascota tiene que ser una cantidad positiva.',
     'any.required': 'El peso de la mascota es obligatorio.'
   }),
-  estimated_birthdate: Joi.date().required().messages({
+  estimatedBirthdate: Joi.date().required().messages({
     'date.base': 'La fecha de nacimiento debe ser una fecha',
     'date.empty': 'La fecha de nacimiento de la mascota no puede estar vacía.',
     'any.required': 'La fecha de nacimiento de la mascota es obligatoria.'
@@ -42,12 +42,12 @@ const addPetSchema = Joi.object({
     'string.max': 'La descripción no puede tener más de 700 caracteres.',
     'any.required': 'La descripción de la mascota es obligatoria.'
   }),
-  date_added: Joi.date().required().messages({
+  dateAdded: Joi.date().required().messages({
     'date.base': 'La fecha de alta debe ser una fecha',
     'date.empty': 'La fecha de alta de la mascota no puede estar vacía.',
     'any.required': 'La fecha de alta de la mascota es obligatoria.'
   }),
-  adoption_date: Joi.date().messages({
+  adoptionDate: Joi.date().messages({
     'date.base': 'La fecha de adopción debe ser una fecha'
   })
 });

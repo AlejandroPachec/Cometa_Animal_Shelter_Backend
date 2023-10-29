@@ -38,7 +38,6 @@ async function addPet (req, res, next) {
 
     const pool = await getPool();
     const { name, species, sex, weight, estimatedBirthdate, breed, status, description, dateAdded, adoptionDate } = req.body;
-
     const [petDescription] = await pool.query(
       'SELECT description FROM pets WHERE description = ?',
       [description]
@@ -46,7 +45,7 @@ async function addPet (req, res, next) {
     if (petDescription.length > 0) {
       return next(generateError('Ya existe una mascota con esa descripción', 400));
     }
-    console.log(dateAdded);
+
     await pool.query(
       'INSERT INTO pets(name, species, sex, weight, estimated_birthdate, breed, status, description, date_added, adoption_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [name, species, sex, weight, estimatedBirthdate, breed, status, description, dateAdded, adoptionDate]
@@ -71,7 +70,6 @@ async function addPet (req, res, next) {
       );
       insertedPhotos.push(photoName);
     }
-//! CORREGIR FECHAS Y COMPROBAR CON VARIAS FOTOS
     res.status(200).send({
       status: 'Ok',
       message: 'Mascota agregada correctamente',
