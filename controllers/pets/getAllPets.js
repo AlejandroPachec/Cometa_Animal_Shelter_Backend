@@ -1,16 +1,17 @@
 const getPool = require('../../db/connectDB');
-//! COMPROBAR FILTROS. SIN FILTROS FUNCIONA
+
 async function getAllPets (req, res, next) {
   try {
     const pool = await getPool();
 
     const conditions = [];
     const weightRange = [];
+    const ageRange = [];
 
     const speciesFilter = req.query?.species;
-    const ageFilter = req.query?.age;
     const nameFilter = req.query?.name;
     const weightFilter = req.query?.weight;
+    const ageFilter = req.query?.age;
 
     let query = `
         SELECT
@@ -26,7 +27,8 @@ async function getAllPets (req, res, next) {
             p.date_added,
             p.adoption_date,
             p.created_at,
-            GROUP_CONCAT(pp.photo) AS pet_photos 
+            GROUP_CONCAT(pp.photo) AS pet_photos,
+            DATEDIFF(CURDATE(), p.estimated_birthdate) AS age
         FROM
             pets AS p
         LEFT JOIN
@@ -37,14 +39,10 @@ async function getAllPets (req, res, next) {
     }
 
     if (ageFilter) {
-      const [minAge, maxAge] = weightFilter.split('-');
-      conditions.push(`p.weight BETWEEN ${minAge} AND ${maxAge}`);
-      weightRange.push(minAge);
-      weightRange.push(maxAge);
-    }
-
-    if (nameFilter) {
-      conditions.push('p.name LIKE ?');
+      const [minAge, maxAge] = ageFilter.split('-');
+      conditions.push(`DATEDIFF(CURDATE(), p.estimated_birthdate) BETWEEN ${minAge} AND ${maxAge}`);
+      ageRange.push(minAge);
+      ageRange.push(maxAge);
     }
 
     if (weightFilter) {
@@ -53,6 +51,10 @@ async function getAllPets (req, res, next) {
       weightRange.push(minWeight);
       weightRange.push(maxWeight);
     }
+    if (nameFilter) {
+      conditions.push('p.name LIKE ?');
+    }
+
 
     if (conditions.length > 0) {
       query += ' WHERE ' + conditions.join(' AND ');
@@ -71,13 +73,13 @@ async function getAllPets (req, res, next) {
         p.description,
         p.date_added,
         p.adoption_date,
-        p.created_at`;
+        p.created_at,
+        age`;
 
     const nameFilterValue = nameFilter ? `%${nameFilter}%` : null;
-    const params = [speciesFilter, ageFilter, nameFilterValue, weightRange].filter(value => value !== undefined);
+    const params = [speciesFilter, ageRange, nameFilterValue, weightRange].filter((value) => value !== undefined);
 
     const [pets] = await pool.query(query, params);
-
 
     const petsWithImages = pets.map((pet) => {
       const petPhotos = pet.pet_photos ? pet.pet_photos.split(',') : [];
@@ -100,3 +102,4 @@ async function getAllPets (req, res, next) {
 }
 
 module.exports = getAllPets;
+
