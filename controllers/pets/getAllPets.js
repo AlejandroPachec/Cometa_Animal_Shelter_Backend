@@ -20,7 +20,7 @@ async function getAllPets (req, res, next) {
             p.species,
             p.sex,
             p.weight,
-            p.estimated_birthdate,
+            STR_TO_DATE(p.estimated_birthdate, '%Y-%m-%d') AS birthdate,
             p.breed,
             p.status,
             p.description,
@@ -28,7 +28,7 @@ async function getAllPets (req, res, next) {
             p.adoption_date,
             p.created_at,
             GROUP_CONCAT(pp.photo) AS pet_photos,
-            DATEDIFF(CURDATE(), p.estimated_birthdate) AS age
+            DATEDIFF(CURDATE(), p.estimated_birthdate)/365 AS age
         FROM
             pets AS p
         LEFT JOIN
@@ -38,11 +38,8 @@ async function getAllPets (req, res, next) {
       conditions.push('p.species = ?');
     }
 
-    if (ageFilter) {
-      const [minAge, maxAge] = ageFilter.split('-');
-      conditions.push(`DATEDIFF(CURDATE(), p.estimated_birthdate) BETWEEN ${minAge} AND ${maxAge}`);
-      ageRange.push(minAge);
-      ageRange.push(maxAge);
+    if (nameFilter) {
+      conditions.push('p.name LIKE ?');
     }
 
     if (weightFilter) {
@@ -51,35 +48,38 @@ async function getAllPets (req, res, next) {
       weightRange.push(minWeight);
       weightRange.push(maxWeight);
     }
-    if (nameFilter) {
-      conditions.push('p.name LIKE ?');
-    }
-
 
     if (conditions.length > 0) {
       query += ' WHERE ' + conditions.join(' AND ');
     }
 
     query += `
-        GROUP BY
-        p.pet_id,
-        p.name,
-        p.species,
-        p.sex,
-        p.weight,
-        p.estimated_birthdate,
-        p.breed,
-        p.status,
-        p.description,
-        p.date_added,
-        p.adoption_date,
-        p.created_at,
-        age`;
+    GROUP BY
+    p.pet_id,
+    p.name,
+    p.species,
+    p.sex,
+    p.weight,
+    p.breed,
+    p.status,
+    p.description,
+    p.date_added,
+    p.adoption_date,
+    p.created_at,
+    age`;
+
+    if (ageFilter) {
+      const [minAge, maxAge] = ageFilter.split('-');
+      query += ` HAVING age BETWEEN ${minAge} AND ${maxAge}`;
+      ageRange.push(minAge);
+      ageRange.push(maxAge);
+    }
 
     const nameFilterValue = nameFilter ? `%${nameFilter}%` : null;
-    const params = [speciesFilter, ageRange, nameFilterValue, weightRange].filter((value) => value !== undefined);
+    const params = [speciesFilter, nameFilterValue, ageRange, weightRange].filter((value) => value !== undefined && value !== null);
 
     const [pets] = await pool.query(query, params);
+
 
     const petsWithImages = pets.map((pet) => {
       const petPhotos = pet.pet_photos ? pet.pet_photos.split(',') : [];
@@ -102,4 +102,5 @@ async function getAllPets (req, res, next) {
 }
 
 module.exports = getAllPets;
+
 
