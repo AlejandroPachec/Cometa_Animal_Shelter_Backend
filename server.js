@@ -6,7 +6,7 @@ const { PORT } = require('./config');
 
 const teamRouter = require('./routes/teamRouter');
 const petsRouter = require('./routes/petsRouter');
-// const testimoniesRouter = require('./routes/testimoniesRouter');
+const testimoniesRouter = require('./routes/testimoniesRouter');
 
 app.use(cors());
 app.use('/uploads', express.static('uploads'));
@@ -16,7 +16,7 @@ app.use(fileUpload());
 
 app.use('/team', teamRouter);
 app.use('/pets', petsRouter);
-// app.use('/testimonies', testimoniesRouter);
+app.use('/testimonies', testimoniesRouter);
 
 app.use((err, req, res, next) => {
   console.error(err);

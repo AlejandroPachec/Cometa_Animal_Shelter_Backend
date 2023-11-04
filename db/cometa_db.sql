@@ -43,12 +43,19 @@ CREATE TABLE IF NOT EXISTS testimonies (
 		testimony_id INT AUTO_INCREMENT PRIMARY KEY,
 		title VARCHAR(150) NOT NULL,
 		text TEXT NULL,
-        testimony_photo VARCHAR(60),
         adopter_first_name VARCHAR(50),
         adopter_last_name VARCHAR(50),
+        pet_name VARCHAR(50),
 		created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 		modified_at DATETIME NULL,
-		pet_id INT NOT NULL,
-		FOREIGN KEY (pet_id) REFERENCES pets(pet_id)
-        ON DELETE CASCADE
+
+);
+
+CREATE TABLE IF NOT EXISTS testimonies_photos (
+							testimony_photo_id INT AUTO_INCREMENT PRIMARY KEY,
+							testimony_id INT,
+							photo VARCHAR(60) NOT NULL,
+							description TEXT,
+							FOREIGN KEY (testimony_id) REFERENCES testimonies (testimony_id)
+									ON DELETE CASCADE
 );

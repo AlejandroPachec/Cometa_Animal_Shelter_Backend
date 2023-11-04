@@ -10,11 +10,14 @@ const addTestimonySchema = Joi.object({
     'string.max': 'La valoración no puede tener más de 1000 caracteres'
   }),
 
-  adopter_first_name: Joi.string().allow(null, '').max(50).message({
+  adopterFirstName: Joi.string().allow(null, '').max(50).message({
     'string.max': 'El nombre no puede tener más de 50 caracteres'
   }),
-  adopter_last_name: Joi.string().allow(null, '').max(50).message({
+  adopterLastName: Joi.string().allow(null, '').max(50).message({
     'string.max': 'El apellido no puede tener más de 50 caracteres'
+  }),
+  petName: Joi.string().allow(null, '').max(50).message({
+    'string.max': 'El nombre de la mascota no puede tener más de 50 caracteres'
   })
 });
 
