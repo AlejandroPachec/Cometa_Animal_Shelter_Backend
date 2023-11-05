@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS cometa;
 
 USE cometa;
 
-DROP TABLE IF EXISTS testimonies, pet_photos, pets, team;
+DROP TABLE IF EXISTS testimonies_photos, testimonies, pet_photos, pets, team;
 
 CREATE TABLE IF NOT EXISTS team (
     team_id INT AUTO_INCREMENT PRIMARY KEY,
