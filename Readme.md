@@ -20,7 +20,7 @@
   </li>
 
 ## Sobre el proyecto
-**_Cometa_** es una protectora de animales y la plataforma pretende permitir tanto a los usuarios poder encontrar a un perro o gato al que quieran adoptar, recibir donaciones de usuarios comprometidos con la causa de la protectora, y facilitar al equipo de voluntarios la gestión de los animales que pasan por la protectora.
+**_Cometa_** es una protectora de animales y la plataforma pretende permitir a los usuarios poder encontrar a un perro o gato al que quieran adoptar, que usuarios comprometidos con la causa de la protectora puedan hacer donaciones y facilitar al equipo de voluntarios la gestión de los animales que pasan por la protectora.
 
 
 ## Antes de empezar
@@ -33,10 +33,6 @@
     ```
     npm install 
     ```
-* Crear la base de datos en MySQL Workbench
-   ```sql
-   CREATE DATABASE IF NOT EXISTS cometa;
-   ```
 * Ejecutar la base de datos
     ```
     npm run db
@@ -54,27 +50,22 @@
   <table border>
     <tbody>
       <tr>
-        <th colspan="3">USUARIOS</th>
+        <th colspan="3">MIEMBROS DEL EQUIPO</th>
       </tr>
       <tr>
         <td align="center">POST</td>
-        <td>user/create</td>
+        <td>team/create</td>
         <td>Añadir un nuevo miembro del equipo</td>
       </tr>
       <tr>
         <td align="center">POST</td>
-        <td>user/login</td>
+        <td>team/login</td>
         <td>Loguear un miembro del equipo</td>
       </tr>
       <tr>
         <td align="center">GET</td>
-        <td>user/profile/:idUser</td>
+        <td>team/profile/:teamId</td>
         <td>Ver el perfil de un miembro del equipo</td>
-      </tr>
-      <tr>
-        <td align="center">PUT</td>
-        <td>user/edit</td>
-        <td>Editar tu perfil</td>
       </tr>
     </tbody>
   </table>
@@ -82,11 +73,11 @@
   <table border>
     <tbody>
       <tr>
-        <th colspan="3">ANIMALES</th>
+        <th colspan="3">MASCOTAS</th>
       </tr>
       <tr>
         <td align="center">POST</td>
-        <td>pets/addpet</td>
+        <td>pets/addPet</td>
         <td>Añadir un nuevo perro o gato que llegue a la protectora</td>
       </tr>
       <tr>
@@ -96,7 +87,7 @@
       </tr>
       <tr>
         <td align="center">GET</td>
-        <td>Pet/:idAnimal</td>
+        <td>Pet/:idPet</td>
         <td>Obtener un animal en concreto</td>
       </tr>
     </tbody>
@@ -109,12 +100,12 @@
       </tr>
       <tr>
         <td align="center">POST</td>
-        <td>experiencias/:idTestimony</td>
+        <td>testimonies/addTestimony</td>
         <td>Añadir una nueva experiencia de animal adoptado</td>
       </tr>
       <tr>
         <td align="center">GET</td>
-        <td>experiencias/:idTestimony</td>
+        <td>testimonies/</td>
         <td>Ver las experiencias</td>
       </tr>
     </tbody>
