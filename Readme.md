@@ -100,12 +100,12 @@
       </tr>
       <tr>
         <td align="center">POST</td>
-        <td>testimonies/addTestimony</td>
+        <td>experiences/addExperience</td>
         <td>Añadir una nueva experiencia de animal adoptado</td>
       </tr>
       <tr>
         <td align="center">GET</td>
-        <td>testimonies/</td>
+        <td>experiences/</td>
         <td>Ver las experiencias</td>
       </tr>
     </tbody>

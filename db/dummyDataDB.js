@@ -26,7 +26,7 @@ async function backUpDB () {
         (2, 'buddy1.jpg', 'Buddy fetching a ball');
     `);
 
-    await pool.query(`INSERT INTO testimonies (title, text, testimony_photo, adopter_first_name, adopter_last_name, pet_id)
+    await pool.query(`INSERT INTO experiences (title, text, experience_photo, adopter_first_name, adopter_last_name, pet_id)
         VALUES
             ('Una Experiencia de Amor', 'Adoptamos a nuestro amigo peludo de este refugio, y ha sido un viaje increíble. Nuestra nueva mascota ha traído tanta alegría a nuestras vidas.', 'testimonio1.jpg', 'Juan', 'Pérez', 1),
             ('Amor Incondicional', 'No puedo expresar cuánto adoramos a nuestra mascota adoptada. Es el compañero más cariñoso y leal que uno podría desear.', 'testimonio2.jpg', 'María', 'González', 2),

@@ -8,7 +8,7 @@ async function createDB () {
     await pool.query('USE cometa;');
 
     await pool.query(
-      'DROP TABLE IF EXISTS testimonies_photos, testimonies, pet_photos, pets, team;'
+      'DROP TABLE IF EXISTS experiences_photos, experiences, pet_photos, pets, team;'
     );
 
     await pool.query(`CREATE TABLE IF NOT EXISTS team (
@@ -47,8 +47,8 @@ async function createDB () {
 			);`);
 
 			
-			await pool.query(`CREATE TABLE IF NOT EXISTS testimonies (
-				testimony_id INT AUTO_INCREMENT PRIMARY KEY,
+			await pool.query(`CREATE TABLE IF NOT EXISTS experiences (
+				experience_id INT AUTO_INCREMENT PRIMARY KEY,
 				title VARCHAR(150) NOT NULL,
 				text TEXT NULL,
 				adopter_first_name VARCHAR(50),
@@ -58,12 +58,12 @@ async function createDB () {
 				modified_at DATETIME NULL
 				);`);
 				
-				await pool.query(`CREATE TABLE IF NOT EXISTS testimonies_photos (
-							testimony_photo_id INT AUTO_INCREMENT PRIMARY KEY,
-							testimony_id INT,
+				await pool.query(`CREATE TABLE IF NOT EXISTS experiences_photos (
+							experience_photo_id INT AUTO_INCREMENT PRIMARY KEY,
+							experience_id INT,
 							photo VARCHAR(60) NOT NULL,
 							description TEXT,
-							FOREIGN KEY (testimony_id) REFERENCES testimonies (testimony_id)
+							FOREIGN KEY (experience_id) REFERENCES experiences (experience_id)
 									ON DELETE CASCADE
 					);`);
     process.exit(0);

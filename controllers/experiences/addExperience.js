@@ -1,10 +1,10 @@
 const getPool = require('../../db/connectDB');
-const addTestimonySchema = require('../../schema/addTestimonySchema');
+const addExperienceSchema = require('../../schema/addExperienceSchema');
 const generateError = require('../../helpers/generateError');
 const savePhoto = require('../../helpers/savePhoto');
 const { photoSchema, arrayPhotoSchema } = require('../../schema/PhotoSchema');
 
-async function addTestimony (req, res, next) {
+async function addExperience (req, res, next) {
   try {
     console.log(req.body);
     const insertedPhotos = [];
@@ -31,7 +31,7 @@ async function addTestimony (req, res, next) {
       return next(generateError(errorSchema.details[0].message, 400));
     }
 
-    const { error } = addTestimonySchema.validate(req.body);
+    const { error } = addExperienceSchema.validate(req.body);
 
     if (error) {
       return next(generateError(error.message, 400));
@@ -41,16 +41,16 @@ async function addTestimony (req, res, next) {
 
     const { title, text, adopterFirstName, adopterLastName, petName } = req.body;
 
-    const [testimonyDescription] = await pool.query(
-      'SELECT text FROM testimonies WHERE text = ?',
+    const [experienceDescription] = await pool.query(
+      'SELECT text FROM experiences WHERE text = ?',
       [text]
     );
-    if (testimonyDescription.length > 0) {
+    if (experienceDescription.length > 0) {
       return next(generateError('Ya existe una experiencia con esa descripción', 400));
     }
 
     await pool.query(
-      'INSERT INTO testimonies(title, text, adopter_first_name, adopter_last_name, pet_name) VALUES (?, ?, ?, ?, ?)',
+      'INSERT INTO experiences(title, text, adopter_first_name, adopter_last_name, pet_name) VALUES (?, ?, ?, ?, ?)',
       [title, text, adopterFirstName, adopterLastName, petName]
     );
     const [insertedId] = await pool.query('SELECT LAST_INSERT_ID() as id');
@@ -59,7 +59,7 @@ async function addTestimony (req, res, next) {
       for (const photo of photos) {
         const photoName = await savePhoto(photo, 500);
         await pool.query(
-          'INSERT INTO testimonies_photos (testimony_id, photo) VALUES (?, ?)',
+          'INSERT INTO experiences_photos (experience_id, photo) VALUES (?, ?)',
           [insertedId[0].id, photoName]
         );
 
@@ -68,7 +68,7 @@ async function addTestimony (req, res, next) {
     } else {
       const photoName = await savePhoto(photos, 500);
       await pool.query(
-        'INSERT INTO testimonies_photos (testimony_id, photo) VALUES (?, ?)',
+        'INSERT INTO experiences_photos (experience_id, photo) VALUES (?, ?)',
         [insertedId[0].id, photoName]
       );
       insertedPhotos.push(photoName);
@@ -77,7 +77,7 @@ async function addTestimony (req, res, next) {
       status: 'Ok',
       message: 'Experiencia agregada correctamente',
       data: {
-        testimony_id: insertedId[0].id,
+        experience_id: insertedId[0].id,
         title,
         text,
         adopterFirstName,
@@ -91,5 +91,5 @@ async function addTestimony (req, res, next) {
   }
 }
 
-module.exports = addTestimony;
+module.exports = addExperience;
 

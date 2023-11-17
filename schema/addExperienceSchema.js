@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const addTestimonySchema = Joi.object({
+const addExperienceSchema = Joi.object({
   title: Joi.string().min(2).max(150).required().messages({
     'string.empty': 'El título no puede estar vacío',
     'string.min': 'El título debe tener mínimo 2 caracteres',
@@ -22,4 +22,4 @@ const addTestimonySchema = Joi.object({
 });
 
 
-module.exports = addTestimonySchema;
+module.exports = addExperienceSchema;
