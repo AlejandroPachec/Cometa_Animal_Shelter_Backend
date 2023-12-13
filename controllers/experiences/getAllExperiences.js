@@ -40,7 +40,7 @@ e.modified_at`
     });
     res.status(200).send({
       status: 'Ok',
-      message: 'Testimonios disponibles',
+      message: 'Experiencias disponibles',
       data: {
         experiences: experiencesWithImages
       }
