@@ -12,10 +12,8 @@ const transporter = nodemailer.createTransport({
     pass: SMTP_PASSWORD
   }
 });
-console.log('cheguei 1');
 
 async function sendVerifyEmail (email, subject, html) {
-  console.log('cheguei 2');
   const emailOptions = {
     from: SMTP_USER,
     to: email,
