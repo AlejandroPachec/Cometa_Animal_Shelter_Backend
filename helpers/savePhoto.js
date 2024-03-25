@@ -6,7 +6,7 @@ const { UPLOADS_DIR } = require('../config');
 const generateError = require('../helpers/generateError');
 require('dotenv').config();
 
-async function savePhoto (photo, width) {
+async function savePhoto (photo) {
 
   const uploadsPath = path.resolve(__dirname, '../', UPLOADS_DIR);
 
@@ -18,7 +18,6 @@ async function savePhoto (photo, width) {
 
   try {
     const image = sharp(photo.data);
-    image.resize(width);
 
     const imageName = randomstring.generate(15) + path.extname(photo.name);
 
