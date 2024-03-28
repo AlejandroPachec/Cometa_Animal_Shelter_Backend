@@ -16,8 +16,8 @@ async function addPet (req, res, next) {
       return next(generateError('No has subido ninguna foto de la mascota', 400));
     }
 
-    if (photos.length > 400) {
-      return next(generateError('Has subido demasiadas fotos. Máximo 400', 400));
+    if (photos.length > 10) {
+      return next(generateError('Has subido demasiadas fotos. Máximo 10', 400));
     }
 
     if (Array.isArray(photos)) {

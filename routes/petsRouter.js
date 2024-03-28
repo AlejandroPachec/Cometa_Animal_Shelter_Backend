@@ -11,7 +11,7 @@ const petExists = require('../middlewares/petExists');
 const petsRouter = express.Router();
 
 petsRouter.get('/', getAllPets);
-petsRouter.post('/addPet', authTeamMember, addPet);
+petsRouter.post('/add', authTeamMember, addPet);
 petsRouter.get('/:idPet', getPet);
 petsRouter.put('/updatePetStatus/:idPet', authTeamMember, updatePetStatus);
 petsRouter.delete('/delete/:idPet', authTeamMember, petExists, deletePet);
