@@ -31,6 +31,7 @@ async function addPet (req, res, next) {
       return next(generateError(photoErrorSchema.details[0].message, 400));
     }
 
+    console.log(req.body);
     const { error: petError } = addPetSchema.validate(req.body);
 
     if (petError) {

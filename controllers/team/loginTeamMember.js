@@ -44,7 +44,7 @@ async function loginUser (req, res, next) {
       id: teamMemberInfo[0].id
     };
 
-    const token = jwt.sign(payload, SECRET, { expiresIn: '365d' });
+    const token = jwt.sign(payload, SECRET, { expiresIn: '15d' });
 
     res.header({ token });
 

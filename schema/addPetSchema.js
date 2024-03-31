@@ -26,11 +26,9 @@ const addPetSchema = Joi.object({
     'date.empty': 'La fecha de nacimiento de la mascota no puede estar vacía.',
     'any.required': 'La fecha de nacimiento de la mascota es obligatoria.'
   }),
-  breed: Joi.string().min(2).max(50).required().messages({
-    'string.empty': 'Tienes que escribir la raza de la mascota.',
+  breed: Joi.string().min(2).max(50).messages({
     'string.min': 'La raza de la mascota debe tener mínimo 2 caracteres.',
-    'string.max': 'La raza de la mascota no puede tener más de 50 caracteres.',
-    'any.required': 'La raza de la mascota es obligatoria.'
+    'string.max': 'La raza de la mascota no puede tener más de 50 caracteres.'
   }),
   status: Joi.any().valid('Buscando', 'En proceso de adopción', 'Adoptado').required().messages({
     'string.empty': 'Tienes que escribir el estado de la mascota.',
