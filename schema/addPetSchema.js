@@ -42,10 +42,8 @@ const addPetSchema = Joi.object({
     'string.max': 'La descripción no puede tener más de 700 caracteres.',
     'any.required': 'La descripción de la mascota es obligatoria.'
   }),
-  dateAdded: Joi.date().required().messages({
-    'date.base': 'La fecha de alta debe ser una fecha',
-    'date.empty': 'La fecha de alta de la mascota no puede estar vacía.',
-    'any.required': 'La fecha de alta de la mascota es obligatoria.'
+  dateAdded: Joi.date().messages({
+    'date.base': 'La fecha de alta debe ser una fecha'
   }),
   adoptionDate: Joi.date().messages({
     'date.base': 'La fecha de adopción debe ser una fecha'
