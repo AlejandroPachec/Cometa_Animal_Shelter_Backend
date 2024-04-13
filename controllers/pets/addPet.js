@@ -2,7 +2,7 @@ const getPool = require('../../db/connectDB');
 const savePhoto = require('../../helpers/savePhoto');
 const addPetSchema = require('../../schema/addPetSchema');
 const generateError = require('../../helpers/generateError');
-const { photoSchema, arrayPhotoSchema } = require('../../schema/photoSchema');
+const { photoSchema, arrayPhotoSchema } = require('../../schema/PhotoSchema');
 
 async function addPet (req, res, next) {
   try {
